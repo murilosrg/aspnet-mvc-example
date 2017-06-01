@@ -1,0 +1,82 @@
+﻿@{
+    Layout = "~/Views/Index.cshtml";
+}
+
+<div data-ng-controller="PessoasController as pessoas">
+    <div class="alert alert-danger" data-ng-show="pessoas.erros">
+        <button type="button" class="close" data-ng-click="pessoas.limparMensagens()"><span aria-hidden="true">&times;</span></button>
+        <span data-ng-repeat="erro in pessoas.erros" data-ng-bind="erro"></span>
+    </div>
+    <div class="alert alert-success" data-ng-show="pessoas.info">
+        <button type="button" class="close" data-ng-click="pessoas.limparMensagens()"><span aria-hidden="true">&times;</span></button>
+        <span data-ng-bind="pessoas.info"></span>
+    </div>
+
+    @Html.Partial("~/Views/Pessoas/Partial/FiltroPessoas.cshtml")
+
+    <div class="form-group text-center">
+        <em class="text-muted" data-ng-bind="pessoas.textoTotalRegistros"></em>
+    </div>
+
+    <div class="panel panel-white">
+        <div class="panel-heading"><i class="fa fa-list"></i>&nbsp;Pessoas</div>
+        <div class="panel-body">
+            <div class="form-group">
+                <button class="btn btn-success"
+                        data-app-modal-target="pessoas.modal.dados"
+                        data-ng-click="pessoas.nova()">
+                    Adicionar&nbsp;
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                </button>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nome</th>
+                            <th>Data de Nascimento</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-ng-repeat="pessoa in pessoas.cadastradas">
+                            <td data-ng-bind="pessoa.idPessoa"></td>
+                            <td data-ng-bind="pessoa.nome"></td>
+                            <td data-ng-bind="pessoa.dataNascimento"></td>
+                            <td class="td-col-4">
+                                <button class="btn btn-success-outline btn-sm"
+                                        data-ng-click="pessoas.selecionar(pessoa)"
+                                        data-app-modal-target="pessoas.modal.dados">
+                                    Editar
+                                </button>
+                                <button class="btn btn-danger-outline btn-sm"
+                                        data-ng-click="pessoas.selecionar(pessoa)"
+                                        data-app-modal-target="pessoas.modal.confirmarRemocao">
+                                    Apagar
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td data-ng-show="pessoas.cadastradas.length == 0" colspan="4">
+                                <em>Não existem pessoas cadastadas para esta consulta.</em>
+                            </td>
+                            <td data-ng-hide="pessoas.cadastradas.length == 0" colspan="4" class="text-center"
+                                data-app-paginacao-continua="pessoas.filtro.paginacao"
+                                data-app-paginacao-continua-atualizar="pessoas.consultar(false)"
+                                data-app-paginacao-continua-iniciar="pessoas.consultar(true)"
+                                data-app-paginacao-continua-iniciada="pessoas.pesquisando"
+                                data-app-paginacao-continua-registros-exibidos="pessoas.cadastradas.length"></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    @Html.Partial("~/Views/Pessoas/Modal/ModalDadosPessoa.cshtml")
+    @Html.Partial("~/Views/Pessoas/Modal/ModalRemoverPessoa.cshtml")
+</div>

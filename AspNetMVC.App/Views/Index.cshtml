@@ -1,0 +1,52 @@
+﻿@using System.Web.Optimization
+
+<!DOCTYPE html>
+
+<html data-ng-app="app">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>AspNet MVC</title>
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/css/vendor.min.css")" />
+    @Styles.Render("~/Styles/app-css")
+    <!--[if lte IE 9]>
+        <script type="text/javascript" src="@Url.Content("~/Scripts/html5shiv.min.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/Scripts/respond.min.js")"></script>
+    <![endif]-->
+</head>
+<body data-ng-controller="AppController as app" data-ng-init="app.validarSessao()">
+
+    <nav class="navbar navbar-default navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button"
+                        class="navbar-toggle collapsed"
+                        data-toggle="collapse"
+                        data-target="#menuUsuario">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">AspNet MVC</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="menuUsuario">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <ul class="dropdown-menu">
+                            <li><a href="/Pessoas">Pessoas</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="ng-cloak container container-body">
+        @RenderBody()
+    </div>
+
+    <script type="text/javascript" src="@Url.Content("~/Scripts/vendor.min.js")"></script>
+    @Scripts.Render("~/Scripts/app-js")
+</body>
+</html>
